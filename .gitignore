@@ -1,0 +1,8 @@
+build/
+dist/
+__pycache__/
+emails.csv
+results.json
+MailLeadGenController.exe
+MailLeadGenController.spec
+MailLeadGen.spec
