@@ -183,8 +183,8 @@ class FlaskAPITestCase(unittest.TestCase):
 
         dash_res = self.client.get('/')
         self.assertEqual(dash_res.status_code, 200)
-        self.assertIn(b"Mail Lead Gen", dash_res.data)
-        self.assertIn(b"Direct Inferencing Studio", dash_res.data)
+        self.assertIn(b"Open SERP & Lead-Gen", dash_res.data)
+        self.assertIn(b"Local Search Inference Studio", dash_res.data)
 
 if __name__ == "__main__":
     unittest.main()

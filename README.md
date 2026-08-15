@@ -1,7 +1,7 @@
 <div align="center">
 
-# ⚡ LOCAL SEARCH INFERENCE & SERP API
-### *High-Performance, Open-Source & Self-Hosted Search Inference Engine*
+# ⚡ OPEN SERP & LEAD-GEN
+### *Open-Source Local Search Inference & Lead Generation Engine*
 
 [![Python Version](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Flask REST API](https://img.shields.io/badge/Flask-REST%20API-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
@@ -13,15 +13,15 @@
 <br/>
 
 <p align="center">
-  <b>A drop-in, zero-cost, privacy-first alternative to expensive cloud SERP APIs (SerpApi, Serper, BrightData).</b><br/>
+  <b>A drop-in, zero-cost, self-hosted alternative to expensive cloud SERP APIs (SerpApi, Serper, BrightData).</b><br/>
   Empower your <b>AI Agents</b>, <b>RAG Pipelines</b>, <b>LLM tools</b>, <b>scrapers</b>, and <b>lead gen workflows</b> with unlimited local search inferencing.
 </p>
 
 <p align="center">
   <a href="#-quick-start">Quick Start</a> •
-  <a href="#-why-local-serp-api">Why This Engine?</a> •
+  <a href="#-why-open-serp--lead-gen">Why Open SERP?</a> •
   <a href="#-rest-api-documentation">REST API Specs</a> •
-  <a href="#-bonus-lead-gen--contact-extractor">Lead Gen Bonus</a> •
+  <a href="#-lead-gen--contact-extractor">Lead Gen Engine</a> •
   <a href="#-python-sdk-usage">Python SDK</a> •
   <a href="#-web-dashboard">Web Studio</a>
 </p>
@@ -34,7 +34,7 @@
 
 ## 🌟 Overview
 
-**Local Search Inference** is a lightweight, local-first search execution engine and SERP (Search Engine Results Page) API server. It allows developers to programmatically execute web search queries, fetch real-time structured rankings (titles, URLs, snippets), parse arbitrary text for contacts, and build autonomous agents—**without paid subscriptions, rate limits, or API key barriers**.
+**Open SERP & Lead-Gen** is a lightweight, local-first search execution engine and SERP (Search Engine Results Page) API server. It allows developers to programmatically execute web search queries, fetch real-time structured rankings (titles, URLs, snippets), parse arbitrary text for contacts, and build autonomous agents—**without paid subscriptions, rate limits, or API key barriers**.
 
 ```
                            ┌───────────────────────────────┐
@@ -43,7 +43,7 @@
                                            │  HTTP POST / JSON
                                            ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                        LOCAL SEARCH INFERENCE ENGINE (:5000)                           │
+│                        OPEN SERP & LEAD-GEN ENGINE (:5000)                             │
 │                                                                                        │
 │  ┌──────────────────────────┐  ┌──────────────────────────┐  ┌───────────────────────┐  │
 │  │   DuckDuckGo Inference   │  │    Official Google API   │  │  Direct HTML Scraper  │  │
@@ -63,9 +63,9 @@
 
 ---
 
-## 🥊 Comparison: Local Engine vs. Cloud SERP APIs
+## 🥊 Comparison: Open SERP vs. Cloud SERP APIs
 
-| Feature | 🚫 Cloud SERP APIs (SerpApi / Serper) | ⚡ Local Search Inference (This Tool) |
+| Feature | 🚫 Cloud SERP APIs (SerpApi / Serper) | ⚡ Open SERP & Lead-Gen |
 | :--- | :--- | :--- |
 | **Pricing** | $50 - $500 / month | **$0.00 (100% Free & Open Source)** |
 | **API Keys** | Mandatory signup & credit card | **None required (Default DDG Engine)** |
@@ -74,6 +74,7 @@
 | **Built-in Contact Parser** | ❌ No (Requires custom code) | **✅ Yes (Regex + Obfuscation Decoder)** |
 | **Platform Dorking** | ❌ No | **✅ Yes (Instagram, LinkedIn, X, etc.)** |
 | **Visual Testing Studio** | Basic / Cloud console | **✅ Built-in Glassmorphism Web UI** |
+
 
 ---
 

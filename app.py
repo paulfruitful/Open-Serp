@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Mail Lead Gen - Flask Direct Inferencing API Server
+Open SERP & Lead-Gen - Flask Direct Search Inference & Lead Generation API Server
 
 Provides REST API endpoints for:
 - Direct search inferencing (DDG, Google API, Scraper)
@@ -251,7 +251,7 @@ def health_check():
     return jsonify({
         "success": True,
         "status": "healthy",
-        "service": "Mail Lead Gen Inferencing API",
+        "service": "Open SERP & Lead-Gen API",
         "version": "1.0.0",
         "database": {
             "leads_count": db_count,
@@ -692,9 +692,9 @@ def export_leads_endpoint():
 def api_docs_endpoint():
     """Returns OpenAPI-style JSON documentation describing all available endpoints."""
     return jsonify({
-        "title": "Mail Lead Gen Direct Inferencing REST API",
+        "title": "Open SERP & Lead-Gen REST API",
         "version": "1.0.0",
-        "description": "High performance API for automated lead generation, web dork inferencing, search extraction, and email parsing.",
+        "description": "High performance local search inference and lead generation API.",
         "endpoints": {
             "GET /api/health": {
                 "summary": "Check system health and active database stats",
@@ -782,7 +782,7 @@ INDEX_HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mail Lead Gen — Direct Inferencing Studio</title>
+  <title>Open SERP & Lead-Gen — Local Search Inference Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1248,11 +1248,11 @@ INDEX_HTML_TEMPLATE = """<!DOCTYPE html>
   <!-- Top Navigation Header -->
   <header>
     <div class="brand">
-      <div class="brand-icon">✉</div>
+      <div class="brand-icon">⚡</div>
       <div>
-        <div class="brand-title">Mail Lead Gen</div>
+        <div class="brand-title">Open SERP & Lead-Gen</div>
       </div>
-      <span class="brand-badge">REST API v1.0</span>
+      <span class="brand-badge">Local Engine v1.0</span>
     </div>
     <div class="nav-actions">
       <div class="db-status-pill">
@@ -1816,14 +1816,14 @@ def dashboard_view():
 # ==========================================
 
 def main():
-    parser = argparse.ArgumentParser(description="Start the Mail Lead Gen Flask Inferencing API Server")
+    parser = argparse.ArgumentParser(description="Start the Open SERP & Lead-Gen Flask API Server")
     parser.add_argument("--host", type=str, default="127.0.0.1", help="Host address to bind to (default: 127.0.0.1)")
     parser.add_argument("--port", type=int, default=5000, help="Port number to listen on (default: 5000)")
     parser.add_argument("--debug", action="store_true", help="Run server in Flask debug mode")
     args = parser.parse_args()
 
     print(f"\n========================================================")
-    print(f"  ✉ Mail Lead Gen - Flask Direct Inferencing API")
+    print(f"  ⚡ Open SERP & Lead-Gen - Local Search Inference API")
     print(f"========================================================")
     print(f"[*] API Server running on: http://{args.host}:{args.port}/")
     print(f"[*] Interactive Studio:   http://{args.host}:{args.port}/")
