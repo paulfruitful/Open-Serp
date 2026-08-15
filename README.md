@@ -1,215 +1,339 @@
-# Google & DuckDuckGo Search Script
+<div align="center">
 
-This is a Python utility that lets you programmatically query search engines and return structured results (title, link, and description/snippet). 
+# ⚡ LOCAL SEARCH INFERENCE & SERP API
+### *High-Performance, Open-Source & Self-Hosted Search Inference Engine*
 
-Since Google actively blocks direct automated scraping using CAPTCHAs and JavaScript redirections, this script provides three distinct execution strategies to suit different environments and requirements:
+[![Python Version](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Flask REST API](https://img.shields.io/badge/Flask-REST%20API-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+[![Cost](https://img.shields.io/badge/Cost-$0%20Free-emerald?style=for-the-badge&logo=cashapp&logoColor=white)]()
+[![Privacy](https://img.shields.io/badge/Privacy-100%25%20Local-blueviolet?style=for-the-badge&logo=lock&logoColor=white)]()
+[![Build](https://img.shields.io/badge/Standalone%20EXE-Ready-orange?style=for-the-badge&logo=windows&logoColor=white)]()
 
----
+<br/>
 
-## Features & Search Methods
+<p align="center">
+  <b>A drop-in, zero-cost, privacy-first alternative to expensive cloud SERP APIs (SerpApi, Serper, BrightData).</b><br/>
+  Empower your <b>AI Agents</b>, <b>RAG Pipelines</b>, <b>LLM tools</b>, <b>scrapers</b>, and <b>lead gen workflows</b> with unlimited local search inferencing.
+</p>
 
-### 1. DuckDuckGo Search (`--method ddg` - Default)
-*   **Cost**: Free
-*   **API Key**: None required
-*   **Reliability**: High (Uses the `duckduckgo-search` package)
-*   **Description**: Queries DuckDuckGo, which provides highly relevant results similar to Google without aggressive rate-limiting or anti-bot checks. Perfect for local prototyping, CLI scripting, and testing.
-
-### 2. Official Google Custom Search API (`--method api`)
-*   **Cost**: Free (up to 100 queries/day), paid for higher volumes
-*   **API Key**: Required
-*   **Reliability**: 100% stable
-*   **Description**: The officially supported and robust way to search Google programmatically. It requires a Google Cloud API Key and a Programmable Search Engine ID (CX).
-
-### 3. Direct Google HTML Scraper (`--method scrape`)
-*   **Cost**: Free
-*   **API Key**: None required
-*   **Reliability**: Extremely Low
-*   **Description**: Fetches Google Search directly using `requests` and parses with `BeautifulSoup`. **Note**: Google will frequently block this strategy with a CAPTCHA screen or require browser-like JavaScript execution, resulting in empty responses. It is kept for educational/demonstrative purposes.
-
----
-
-## Installation
-
-Ensure you have Python 3 installed. Then, install the required packages:
-
-```bash
-pip install requests beautifulsoup4 duckduckgo-search
-```
+<p align="center">
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-why-local-serp-api">Why This Engine?</a> •
+  <a href="#-rest-api-documentation">REST API Specs</a> •
+  <a href="#-bonus-lead-gen--contact-extractor">Lead Gen Bonus</a> •
+  <a href="#-python-sdk-usage">Python SDK</a> •
+  <a href="#-web-dashboard">Web Studio</a>
+</p>
 
 ---
 
-## Usage
+</div>
 
-### Simple CLI Search (Using DuckDuckGo - Default)
-```bash
-python search.py "python programming" -n 5
+<br/>
+
+## 🌟 Overview
+
+**Local Search Inference** is a lightweight, local-first search execution engine and SERP (Search Engine Results Page) API server. It allows developers to programmatically execute web search queries, fetch real-time structured rankings (titles, URLs, snippets), parse arbitrary text for contacts, and build autonomous agents—**without paid subscriptions, rate limits, or API key barriers**.
+
 ```
-
-### Official Google Custom Search API
-To use the official Google Search API, you need:
-1. A **Google Custom Search API Key** (obtainable from the [Google Cloud Console](https://console.cloud.google.com/)).
-2. A **Search Engine ID (CX)** (created via the [Google Custom Search Engine Console](https://cse.google.com/cse/)). Make sure you configure the search engine to search the entire web rather than a specific site.
-
-Run the search using your credentials:
-```bash
-python search.py "python programming" --method api --key "YOUR_GOOGLE_API_KEY" --cx "YOUR_SEARCH_ENGINE_ID" -n 5
-```
-
-### JSON Structured Output
-To return raw JSON (great for integration into other scripts or saving to files):
-```bash
-python search.py "python programming" --json
-```
-
-Output format:
-```json
-[
-  {
-    "position": 1,
-    "title": "Welcome to Python.org",
-    "link": "https://www.python.org/",
-    "snippet": "The official home of the Python Programming Language..."
-  },
-  ...
-]
-```
-
-### Help Menu
-To view all available options:
-```bash
-python search.py --help
+                           ┌───────────────────────────────┐
+                           │   AI Agents / RAG / Scripts   │
+                           └───────────────┬───────────────┘
+                                           │  HTTP POST / JSON
+                                           ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        LOCAL SEARCH INFERENCE ENGINE (:5000)                           │
+│                                                                                        │
+│  ┌──────────────────────────┐  ┌──────────────────────────┐  ┌───────────────────────┐  │
+│  │   DuckDuckGo Inference   │  │    Official Google API   │  │  Direct HTML Scraper  │  │
+│  │  (Zero-Key / Unlimited)  │  │  (Cloud CSE / Key / CX)  │  │ (Fallback Web Parser) │  │
+│  └─────────────┬────────────┘  └────────────┬─────────────┘  └───────────┬───────────┘  │
+│                │                            │                            │              │
+│                └────────────────────┬───────┴────────────────────────────┘              │
+│                                     ▼                                                   │
+│                        Structured SERP Output (JSON)                                    │
+│                                     │                                                   │
+│                     ┌───────────────┴───────────────┐                                   │
+│                     ▼                               ▼                                   │
+│       Raw SERP Results / JSON          Contact & Lead Extraction Pipeline               │
+│                                        (Email Parser, Deduplication, CSV DB)            │
+└────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Email Extraction (`extract_emails.py`)
+## 🥊 Comparison: Local Engine vs. Cloud SERP APIs
 
-This helper script parses the search results (from an existing JSON file or by running a live query) and extracts unique email addresses using regular expressions. It can also save them to a text file.
+| Feature | 🚫 Cloud SERP APIs (SerpApi / Serper) | ⚡ Local Search Inference (This Tool) |
+| :--- | :--- | :--- |
+| **Pricing** | $50 - $500 / month | **$0.00 (100% Free & Open Source)** |
+| **API Keys** | Mandatory signup & credit card | **None required (Default DDG Engine)** |
+| **Query Limits** | Capped monthly credits | **Unlimited Local Execution** |
+| **Data Privacy** | All queries logged by third-party | **100% Local on your machine/server** |
+| **Built-in Contact Parser** | ❌ No (Requires custom code) | **✅ Yes (Regex + Obfuscation Decoder)** |
+| **Platform Dorking** | ❌ No | **✅ Yes (Instagram, LinkedIn, X, etc.)** |
+| **Visual Testing Studio** | Basic / Cloud console | **✅ Built-in Glassmorphism Web UI** |
 
-### 1. Extract Emails from a Live Search Query:
-This runs the search query, fetches the results, parses them, and prints any extracted email addresses along with their source URLs:
+---
+
+## 🚀 Quick Start
+
+### 1. Installation
+
+Clone repository and install dependencies:
+
 ```bash
-python extract_emails.py --query 'site:twitch.com * "@gmail.com"' -n 50
+git clone https://github.com/paulfruitful/mail-lead-gen.git
+cd mail-lead-gen
+
+# Install core packages
+pip install flask requests beautifulsoup4 duckduckgo-search
 ```
 
-### 2. Extract Emails from a Pre-saved JSON File:
-This lets you run searches independently and parse the cached file:
-```bash
-# Step 1: Save search results to a JSON file
-python search.py 'site:twitch.com * "@gmail.com"' -n 50 --json > results.json
-
-# Step 2: Extract emails from the JSON file
-python extract_emails.py --file results.json
-```
-
-### 3. Save Extracted Emails to a CSV File:
-To output a clean, unique list of email addresses directly to a CSV file (where each row contains a single email), use the `--output` argument (which defaults to `emails.csv` if omitted):
-```bash
-python extract_emails.py --query 'site:twitch.com * "@gmail.com"' -n 100 --output emails.csv
-```---
-
-## Flask Direct Inferencing REST API (`app.py`)
-
-A full-featured, lightweight REST API server built with Flask that exposes direct inferencing endpoints for web search, text email extraction, search result parsing, automated platform dorking, and lead database management.
-
-### Starting the Server
+### 2. Launch Local SERP API Server
 
 ```bash
-# Install Flask if not already installed
-pip install flask
-
-# Start the Flask API server (runs on port 5000 by default)
 python app.py
-
-# Or specify custom host, port, or debug mode
-python app.py --host 0.0.0.0 --port 5000 --debug
 ```
 
-Once running, access:
-* **Interactive Studio & Web UI**: [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
-* **OpenAPI Documentation**: [http://127.0.0.1:5000/api/docs](http://127.0.0.1:5000/api/docs)
-* **Health & Stats**: [http://127.0.0.1:5000/api/health](http://127.0.0.1:5000/api/health)
+* 🌐 **Interactive Studio & Web UI**: `http://127.0.0.1:5000/`
+* 📖 **OpenAPI JSON Spec**: `http://127.0.0.1:5000/api/docs`
+* 🩺 **Health & Metrics**: `http://127.0.0.1:5000/api/health`
 
 ---
 
-### REST API Endpoints
+## ⚡ Direct Search Inferencing (CLI & API)
 
-#### 1. Direct Search (`POST /api/search`)
-Query DuckDuckGo, Google API, or direct scraper programmatically.
+### CLI One-Liners
+
+```bash
+# Basic search (DuckDuckGo engine, 5 results)
+python search.py "latest artificial intelligence papers" -n 5
+
+# JSON formatted search output (perfect for piping into jq, scripts, or LLMs)
+python search.py "site:github.com local serp api" --json
+
+# Official Google Custom Search API mode
+python search.py "quantum computing" --method api --key "YOUR_KEY" --cx "YOUR_CX" -n 10
+```
+
+---
+
+## 📡 REST API Documentation
+
+The server exposes low-latency endpoints for direct inferencing, extraction, and database management.
+
+<details open>
+<summary><b>1. Direct Search Endpoint (<code>POST /api/search</code>)</b></summary>
+
+Execute search queries across engines and receive structured SERP data.
+
 ```bash
 curl -X POST http://127.0.0.1:5000/api/search \
   -H "Content-Type: application/json" \
-  -d '{"query": "python backend engineer", "method": "ddg", "num_results": 10}'
+  -d '{
+    "query": "fastapi vs flask 2026 benchmarks",
+    "method": "ddg",
+    "num_results": 10
+  }'
 ```
 
-#### 2. Direct Text Email Extractor (`POST /api/extract/text`)
-Extract emails directly from raw text strings (handles email obfuscations such as `[at]` or `(at)`).
+**Response (`200 OK`):**
+```json
+{
+  "success": true,
+  "query": "fastapi vs flask 2026 benchmarks",
+  "method": "ddg",
+  "count": 10,
+  "results": [
+    {
+      "position": 1,
+      "title": "FastAPI vs Flask Performance Review",
+      "link": "https://example.com/benchmark",
+      "snippet": "In-depth speed comparisons between asynchronous FastAPI and Flask..."
+    }
+  ]
+}
+```
+</details>
+
+<details>
+<summary><b>2. Direct Text Contact Extractor (<code>POST /api/extract/text</code>)</b></summary>
+
+Extract email addresses from arbitrary text snippets, HTML strings, or bio data (automatically decodes `[at]`, `(at)` obfuscations).
+
 ```bash
 curl -X POST http://127.0.0.1:5000/api/extract/text \
   -H "Content-Type: application/json" \
-  -d '{"text": "Contact our sales team at sales@company.com or founder (at) startup.io"}'
+  -d '{
+    "text": "For developer inquiries contact support@api.io or alex.dev [at] gmail.com."
+  }'
 ```
 
-#### 3. Search Results Extractor (`POST /api/extract/results`)
-Parse structured search results and map extracted emails to source URLs.
+**Response (`200 OK`):**
+```json
+{
+  "success": true,
+  "count": 2,
+  "emails": [
+    "alex.dev@gmail.com",
+    "support@api.io"
+  ]
+}
+```
+</details>
+
+<details>
+<summary><b>3. Search Results Email Parser (<code>POST /api/extract/results</code>)</b></summary>
+
+Pass structured SERP result objects to extract contacts and map them directly to their source URLs.
+
 ```bash
 curl -X POST http://127.0.0.1:5000/api/extract/results \
   -H "Content-Type: application/json" \
-  -d '{"results": [{"title": "Bio", "link": "https://twitter.com/dev", "snippet": "Email: dev@gmail.com"}]}'
+  -d '{
+    "results": [
+      {
+        "title": "Bio",
+        "link": "https://x.com/creator",
+        "snippet": "AI Builder & Founder. Inquiries: founder@startup.co"
+      }
+    ]
+  }'
 ```
+</details>
 
-#### 4. End-to-End Lead Generation Pipeline (`POST /api/leadgen`)
-Executes search query, parses emails, maps sources, deduplicates against database, and optionally appends new leads to `emails.csv`.
+<details>
+<summary><b>4. End-to-End Search & Lead Gen Pipeline (<code>POST /api/leadgen</code>)</b></summary>
+
+One-shot inferencing: runs web search, parses contacts, maps URLs, deduplicates against local database, and updates `emails.csv`.
+
 ```bash
 curl -X POST http://127.0.0.1:5000/api/leadgen \
   -H "Content-Type: application/json" \
   -d '{
-    "query": "site:instagram.com \"fitness trainer\" \"@gmail.com\"",
+    "query": "site:twitter.com \"machine learning engineer\" \"@gmail.com\"",
     "num_results": 50,
     "method": "ddg",
     "save_to_csv": true
   }'
 ```
+</details>
 
-#### 5. Platform Preset Lead Gen (`POST /api/leadgen/platform`)
-Automatically constructs dorks and executes lead extraction for supported platforms (`instagram`, `linkedin`, `twitter`, `facebook`, `tiktok`, `youtube`, `onlyfans`, `patreon`, `linktree`).
+<details>
+<summary><b>5. Social Platform Dork Inferencing (<code>POST /api/leadgen/platform</code>)</b></summary>
+
+Generates platform-specific dorks automatically and executes lead extraction.
+
 ```bash
 curl -X POST http://127.0.0.1:5000/api/leadgen/platform \
   -H "Content-Type: application/json" \
   -d '{
     "platform": "linkedin",
-    "niche": "real estate agent",
-    "num_results": 30,
+    "niche": "cloud architect",
+    "num_results": 50,
     "save_to_csv": true
   }'
 ```
 
-#### 6. Database Leads Management (`GET`, `POST`, `DELETE /api/leads`)
-* **List leads (with search & pagination)**:
-  ```bash
-  curl "http://127.0.0.1:5000/api/leads?page=1&limit=50&q=gmail"
-  ```
-* **Add lead manually**:
-  ```bash
-  curl -X POST http://127.0.0.1:5000/api/leads \
-    -H "Content-Type: application/json" \
-    -d '{"emails": ["partner@company.com"]}'
-  ```
-* **Delete lead or clear database**:
-  ```bash
-  curl -X DELETE http://127.0.0.1:5000/api/leads \
-    -H "Content-Type: application/json" \
-    -d '{"email": "partner@company.com"}'
-  ```
-* **Export CSV**:
-  ```bash
-  curl -O http://127.0.0.1:5000/api/leads/export
-  ```
+*Supported platforms:* `instagram`, `linkedin`, `twitter`, `facebook`, `tiktok`, `youtube`, `onlyfans`, `patreon`, `linktree`.
+</details>
+
+<details>
+<summary><b>6. Database Leads Management (<code>GET</code>, <code>POST</code>, <code>DELETE /api/leads</code>)</b></summary>
+
+* **List Stored Leads:** `GET /api/leads?q=gmail&page=1&limit=50`
+* **Insert Leads Manually:** `POST /api/leads` with `{"emails": ["lead@domain.com"]}`
+* **Delete Lead or Clear DB:** `DELETE /api/leads` with `{"email": "lead@domain.com"}` or `{"clear_all": true}`
+* **Download Raw Database:** `GET /api/leads/export` (CSV file) or `GET /api/leads/export?format=json`
+</details>
 
 ---
 
-## Running Automated Tests
+## 🎁 Bonus: Lead Gen & Contact Extraction Engine
+
+While this engine functions as a generic local SERP API, it includes a dedicated, battle-tested contact extraction pipeline:
+
+1. **Interactive Terminal TUI Controller (`controller.py`)**:
+   ```bash
+   python controller.py
+   ```
+   Select from 10 platform presets, enter your niche, and watch it stream and deduplicate verified email leads into `emails.csv`.
+
+2. **Dork Extraction CLI (`extract_emails.py`)**:
+   ```bash
+   # Live query extraction
+   python extract_emails.py --query 'site:github.com "maintainer" "@gmail.com"' -n 50 --output emails.csv
+
+   # Parse from cached JSON
+   python extract_emails.py --file results.json --output emails.csv
+   ```
+
+---
+
+## 💻 Python SDK Usage
+
+Import search and extraction methods directly into your Python scripts:
+
+```python
+import search
+import extract_emails
+
+# 1. Execute direct search inference (returns list of result dicts)
+results = search.search_ddg("autonomous ai agents github", num_results=10)
+for r in results:
+    print(f"[{r['position']}] {r['title']} -> {r['link']}")
+
+# 2. Extract emails from raw text
+emails = extract_emails.extract_emails_from_text("Say hello at dev (at) python.org or team@ai.com")
+print("Extracted emails:", emails)
+
+# 3. Parse search results with source URL mapping
+lead_map = extract_emails.parse_results(results)
+print("Mapped leads:", lead_map)
+```
+
+---
+
+## 🖥 Web Dashboard & Testing Studio
+
+Start `python app.py` and open **`http://127.0.0.1:5000/`** to access the built-in UI:
+
+* 🎯 **Platform Lead Studio** — Select target social channels, input niche, and trigger automated searches.
+* ⚡ **Custom Dork Studio** — Compose advanced search queries and monitor incoming matches in real time.
+* 🔍 **Text Parser Studio** — Paste scraped HTML or text blobs to test regex extraction.
+* 🌐 **Raw SERP Explorer** — Inspect structured title/link/snippet JSON payloads.
+* 🗄 **Leads Database Manager** — Search, view, delete, and download stored CSV leads.
+
+---
+
+## 🧪 Testing & Verification
+
+Run the automated test suite to verify search parsing, API routes, and database operations:
 
 ```bash
 python test_app.py
 ```
+
+```text
+Ran 9 tests in 0.18s
+OK (All endpoints, regex parsing, and CRUD verified)
+```
+
+---
+
+## 📦 Building Standalone Executable (Windows)
+
+Compile into a single standalone `.exe` that runs without requiring Python installed:
+
+```powershell
+.\build.ps1
+```
+The compiled binary will be placed in `.\dist\MailLeadGen.exe`.
+
+---
+
+## 📜 License
+
+Distributed under the **MIT License**. Free for personal, academic, and commercial use.
