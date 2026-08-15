@@ -106,6 +106,110 @@ python extract_emails.py --file results.json
 To output a clean, unique list of email addresses directly to a CSV file (where each row contains a single email), use the `--output` argument (which defaults to `emails.csv` if omitted):
 ```bash
 python extract_emails.py --query 'site:twitch.com * "@gmail.com"' -n 100 --output emails.csv
+```---
+
+## Flask Direct Inferencing REST API (`app.py`)
+
+A full-featured, lightweight REST API server built with Flask that exposes direct inferencing endpoints for web search, text email extraction, search result parsing, automated platform dorking, and lead database management.
+
+### Starting the Server
+
+```bash
+# Install Flask if not already installed
+pip install flask
+
+# Start the Flask API server (runs on port 5000 by default)
+python app.py
+
+# Or specify custom host, port, or debug mode
+python app.py --host 0.0.0.0 --port 5000 --debug
 ```
 
+Once running, access:
+* **Interactive Studio & Web UI**: [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
+* **OpenAPI Documentation**: [http://127.0.0.1:5000/api/docs](http://127.0.0.1:5000/api/docs)
+* **Health & Stats**: [http://127.0.0.1:5000/api/health](http://127.0.0.1:5000/api/health)
 
+---
+
+### REST API Endpoints
+
+#### 1. Direct Search (`POST /api/search`)
+Query DuckDuckGo, Google API, or direct scraper programmatically.
+```bash
+curl -X POST http://127.0.0.1:5000/api/search \
+  -H "Content-Type: application/json" \
+  -d '{"query": "python backend engineer", "method": "ddg", "num_results": 10}'
+```
+
+#### 2. Direct Text Email Extractor (`POST /api/extract/text`)
+Extract emails directly from raw text strings (handles email obfuscations such as `[at]` or `(at)`).
+```bash
+curl -X POST http://127.0.0.1:5000/api/extract/text \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Contact our sales team at sales@company.com or founder (at) startup.io"}'
+```
+
+#### 3. Search Results Extractor (`POST /api/extract/results`)
+Parse structured search results and map extracted emails to source URLs.
+```bash
+curl -X POST http://127.0.0.1:5000/api/extract/results \
+  -H "Content-Type: application/json" \
+  -d '{"results": [{"title": "Bio", "link": "https://twitter.com/dev", "snippet": "Email: dev@gmail.com"}]}'
+```
+
+#### 4. End-to-End Lead Generation Pipeline (`POST /api/leadgen`)
+Executes search query, parses emails, maps sources, deduplicates against database, and optionally appends new leads to `emails.csv`.
+```bash
+curl -X POST http://127.0.0.1:5000/api/leadgen \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "site:instagram.com \"fitness trainer\" \"@gmail.com\"",
+    "num_results": 50,
+    "method": "ddg",
+    "save_to_csv": true
+  }'
+```
+
+#### 5. Platform Preset Lead Gen (`POST /api/leadgen/platform`)
+Automatically constructs dorks and executes lead extraction for supported platforms (`instagram`, `linkedin`, `twitter`, `facebook`, `tiktok`, `youtube`, `onlyfans`, `patreon`, `linktree`).
+```bash
+curl -X POST http://127.0.0.1:5000/api/leadgen/platform \
+  -H "Content-Type: application/json" \
+  -d '{
+    "platform": "linkedin",
+    "niche": "real estate agent",
+    "num_results": 30,
+    "save_to_csv": true
+  }'
+```
+
+#### 6. Database Leads Management (`GET`, `POST`, `DELETE /api/leads`)
+* **List leads (with search & pagination)**:
+  ```bash
+  curl "http://127.0.0.1:5000/api/leads?page=1&limit=50&q=gmail"
+  ```
+* **Add lead manually**:
+  ```bash
+  curl -X POST http://127.0.0.1:5000/api/leads \
+    -H "Content-Type: application/json" \
+    -d '{"emails": ["partner@company.com"]}'
+  ```
+* **Delete lead or clear database**:
+  ```bash
+  curl -X DELETE http://127.0.0.1:5000/api/leads \
+    -H "Content-Type: application/json" \
+    -d '{"email": "partner@company.com"}'
+  ```
+* **Export CSV**:
+  ```bash
+  curl -O http://127.0.0.1:5000/api/leads/export
+  ```
+
+---
+
+## Running Automated Tests
+
+```bash
+python test_app.py
+```
